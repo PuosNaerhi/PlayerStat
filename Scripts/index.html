@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html  ng-app= myApp>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<script type="text/javascript" src=myApp.js></script>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<body>
+<div ng-controller="TabsCtrl">
+
+	<input id="radio_tab_group1" type="radio" name="tab_group" ng-click="setTab(1)" ng-class="{active:isSet(1)}" checked="checked">
+	<label for="radio_tab_group1">setting</label>
+
+	<input id="radio_tab_group2" type="radio" name="tab_group" ng-click="setTab(2)" ng-class="{active:isSet(2)}">
+	<label for="radio_tab_group2">play</label>
+
+	<input id="radio_tab_group3" type="radio" name="tab_group" ng-click="setTab(3)" ng-class="{active:isSet(3)}">
+	<label for="radio_tab_group3">p result</label>
+
+	<input id="radio_tab_group4" type="radio" name="tab_group" ng-click="setTab(4)" ng-class="{active:isSet(4)}">
+	<label for="radio_tab_group4">l result</label>
+
+	<input id="radio_tab_group5" type="radio" name="tab_group" ng-click="setTab(5)" ng-class="{active:isSet(5)}">
+	<label for="radio_tab_group5">dump</label>
+
+
+<input type="button" value="save" ng-click="saveToLocal()">
+<input type="button" value="load" ng-click="loadFromLocal()">
+<input type="button" value="remove" ng-click="removeFromLocal()">
+	<div ng-show="isSet(1)">
+		<div ng-controller="PlayerCtrl">
+			<div style="float: left;">
+			<table border="1">
+				<thead>
+					<tr>
+						<td>Numero</td>
+						<td>Nimi</td>						
+                        			<td>Poista</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="player in players">
+						<td>{{player.number}}</td>
+						<td>{{player.name}}</td>
+						<td><input type="button" value="Remove" ng-click="removePlayer($index)" /></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table>
+				<tr>
+					<td>Numero: </td>
+					<td><input type="text" ng-model="player.number" /></td>
+				</tr>
+				<tr>
+					<td>Nimi: </td>
+					<td><input type="text" ng-model="player.name" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="Button" value="Lisää" ng-click="addPlayer(player)" /> </td>
+					
+				</tr>
+			</table>
+
+			</div>
+		</div>
+
+		<div>
+			<pihvi user="line1"></pihvi>
+			<pihvi user="line2"></pihvi>
+			<pihvi user="line3"></pihvi>
+			<pihvi user="line4"></pihvi>
+		</div>
+	</div>
+
+
+	<div ng-show="isSet(2)">
+		<div ng-controller="LineCtrl" style="float: left;">
+			<div ng-controller="PeriodCtrl">
+				<input id="period1" type="radio" name="period_group" ng-model="period_group" value="period1" ng-click="setPeriodGroup(period_group)"><label for="period1">Per 1</label>
+				<input id="period2" type="radio" name="period_group" ng-model="period_group" value="period2" ng-click="setPeriodGroup(period_group)"><label for="period2">Per 2</label>
+				<input id="period3" type="radio" name="period_group" ng-model="period_group" value="period3" ng-click="setPeriodGroup(period_group)"><label for="period3">Per 3</label>
+				<input id="period4" type="radio" name="period_group" ng-model="period_group" value="period4" ng-click="setPeriodGroup(period_group)"><label for="period4">OT</label>								
+			</div>
+
+
+			<div ng-controller="TimerCtrl">
+				
+    				<button ng-click="takeAction()">{{buttonText}}</button>
+				{{counter|formatTimer}}    
+			</div>
+			
+			<div>
+				<table>
+					<td><input id="line1" type="radio" name="line_group" ng-model="line_group" value="line1" ng-click="ChangeLine(line_group)"><label for="line1">Line 1</label></td>
+					<td><pahkura user="line1"></pahkura></td>
+				</table>
+			</div>			
+			<div>
+				<table>
+					<td><input id="line2" type="radio" name="line_group" ng-model="line_group" value="line2" ng-click="ChangeLine(line_group)"><label for="line2">Line 2</label></td>
+					<td><pahkura user="line2"></pahkura></td>
+				</table>
+			</div>			
+			<div>
+				<table>
+					<td><input id="line3" type="radio" name="line_group" ng-model="line_group" value="line3" ng-click="ChangeLine(line_group)"><label for="line3">Line 3</label></td>
+					<td><pahkura user="line3"></pahkura></td>
+				</table>
+			</div>
+			
+			<div>
+				<table>
+					<td><input id="line4" type="radio" name="line_group" ng-model="line_group" value="line4" ng-click="ChangeLine(line_group)"><label for="line4">Line 4</label></td>
+					<td><pahkura user="line4"></pahkura></td>
+				</table>
+			</div>
+
+			<div>
+				<input id="pp1" type="radio" name="line_group" ng-model="line_group" value="pp1" ng-click="ChangeLine(line_group)"><label for="pp1">PP 1</label></td>
+				<input id="pp2" type="radio" name="line_group" ng-model="line_group" value="pp2" ng-click="ChangeLine(line_group)"><label for="pp2">PP 2</label></td>
+				<input id="sh1" type="radio" name="line_group" ng-model="line_group" value="sh1" ng-click="ChangeLine(line_group)"><label for="sh1">SH 1</label></td>
+				<input id="sh2" type="radio" name="line_group" ng-model="line_group" value="sh2" ng-click="ChangeLine(line_group)"><label for="sh2">SH 2</label></td>
+								
+			</div>
+
+			<div ng-controller="PossessionCtrl" >
+				<input id="own" type="radio" name="possession_group" ng-model="possession_group" value="own" ng-click="ChangePossession(possession_group)"><label for="own">Own</label></td>
+				<input id="opp" type="radio" name="possession_group" ng-model="possession_group" value="opp" ng-click="ChangePossession(possession_group)"><label for="opp">Opp</label></td>
+
+			</div>			
+		</div>
+
+		<div ng-controller="WhatGroupCtrl">
+			<div style="float: left;">
+				<table border="1">
+					<tr>
+						<td>
+							<table>
+								<td><input id="radio_wf_group1" type="radio" name="what_field_group" ng-model="whatfield_Group" value="5vs5" ng-click="set_whatfield_Group(whatfield_Group)"><label for="radio_wf_group1">5vs5</label></td>
+								<td><input id="radio_wf_group2" type="radio" name="what_field_group" ng-model="whatfield_Group" value="PP" ng-click="set_whatfield_Group(whatfield_Group)"><label for="radio_wf_group2">PP</label></td>
+								<td><input id="radio_wf_group3" type="radio" name="what_field_group" ng-model="whatfield_Group" value="SH" ng-click="set_whatfield_Group(whatfield_Group)"><label for="radio_wf_group3">SH</label></td>
+								<td><input id="radio_wf_group4" type="radio" name="what_field_group" ng-model="whatfield_Group" value="WG" ng-click="set_whatfield_Group(whatfield_Group)"><label for="radio_wf_group4">WG</label></td>
+								<td><input id="radio_wf_group5" type="radio" name="what_field_group" ng-model="whatfield_Group" value="EN" ng-click="set_whatfield_Group(whatfield_Group)"><label for="radio_wf_group5">EN</label></td>
+							</table>	
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align:center">
+							<label>Event Selectors</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table >
+								<td class="green"><input id="radio_what_group1" type="radio" name="what_group" ng-model="whatGroup" value="pass_plus" ng-click="Canvas_setTab(1)" ng-class="{active:Canvas_isSet(1)}">
+									<label for="radio_what_group1">+</label></td>
+								<td></td>
+								<td width="100%" style="text-align:center">Pass</td>
+								<td class="red"><input id="radio_what_group2" type="radio" name="what_group" ng-model="whatGroup" value="pass_minus" ng-click="Canvas_setTab(1)" ng-class="{active:Canvas_isSet(1)}">
+									<label for="radio_what_group2">-</label></td>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<td><input id="radio_what_group3" type="radio" name="what_group" ng-model="whatGroup" value="1vs1_off_plus" ng-click="Canvas_setTab(2)" ng-class="{active:Canvas_isSet(2)}">
+									<label for="radio_what_group3">+</label></td>
+								<td width="100%" style="text-align:center">1vs1 Off</td>
+								<td><input id="radio_what_group4" type="radio" name="what_group" ng-model="whatGroup" value="1vs1_off_minus" ng-click="Canvas_setTab(2)" ng-class="{active:Canvas_isSet(2)}">
+									<label for="radio_what_group4">-</label></td>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<td><input id="radio_what_group5" type="radio" name="what_group" ng-model="whatGroup" value="1vs1_def_plus" ng-click="Canvas_setTab(2)" ng-class="{active:Canvas_isSet(2)}">
+									<label for="radio_what_group5">+</label></td>
+								<td width="100%" style="text-align:center">1vs1 Def</td>
+								<td><input id="radio_what_group6" type="radio" name="what_group" ng-model="whatGroup" value="1vs1_def_minus" ng-click="Canvas_setTab(2)" ng-class="{active:Canvas_isSet(2)}">
+									<label for="radio_what_group6">-</label></td>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<td><input id="radio_what_group10" type="radio" name="what_group" ng-model="whatGroup" value="shot" ng-click="Canvas_setTab(3)" ng-class="{active:Canvas_isSet(3)}"><label for="radio_what_group10">Shot</label></td>
+								<td><input id="radio_what_group11" type="radio" name="what_group" ng-model="whatGroup" value="goal" ng-click="Canvas_setTab(3)" ng-class="{active:Canvas_isSet(3)}"><label for="radio_what_group11">Goal</label></td>
+								<td><input id="radio_what_group12" type="radio" name="what_group" ng-model="whatGroup" value="miss" ng-click="Canvas_setTab(3)" ng-class="{active:Canvas_isSet(3)}"><label for="radio_what_group12">Miss</label></td>
+								<td><input id="radio_what_group13" type="radio" name="what_group" ng-model="whatGroup" value="blocked" ng-click="Canvas_setTab(3)" ng-class="{active:Canvas_isSet(3)}"><label for="radio_what_group13">Blocked</label></td>
+							</table>
+						</td>
+					</tr>
+
+
+				</table>	
+
+			</div>
+			<div style="float: left;">
+				<div ng-show="Canvas_isSet(1)">
+					<div ng-controller="CanvasCtrl1">
+						<canvas id="myCanvas1" width="242" height="482">Your browser does not support the HTML5 canvas tag.</canvas>
+					</div>
+				</div>
+
+				<div ng-show="Canvas_isSet(2)">
+					<div ng-controller="CanvasCtrl2">
+						<canvas id="myCanvas2" width="242" height="482">Your browser does not support the HTML5 canvas tag.</canvas>
+					</div>
+				</div>
+
+				<div ng-show="Canvas_isSet(3)">
+					<div ng-controller="CanvasCtrl3">
+						<canvas id="myCanvas3" width="242" height="482">Your browser does not support the HTML5 canvas tag.</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div ng-show="isSet(3)">
+		<div ng-controller="playerResultCtrl" style="float: left;">
+			
+			<table border="1">
+				<tr>
+					<td >
+						<table>
+        						<td ng-repeat="strength in strengths"><input id="result+{{strength.strengthName}}" type="checkbox"  ng-model="strength.isChecked" ng-change="updatePlayerResultCanvas()"><label for=result+{{strength.strengthName}}>{{strength.strengthName}}</label></td>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<table>
+							<td ng-repeat="period in periods"><input id="presult+{{period.periodName}}" type="checkbox"  ng-model="period.isChecked" ng-change="updatePlayerResultCanvas()"><label for=presult+{{period.periodName}}>{{period.periodName}}</label></td>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<table>
+							<td></td>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<td><input id="radio_presult_group1" type="radio" name="presult_what_field_group" ng-model="presult_whatfield_Group" value="pass" ng-click="updatePlayerResultCanvas()"><label for="radio_presult_group1">Pass</label></td>
+							<td width="50%" style="text-align:center"></td>
+							<td><input id="radio_presult_group2" type="radio" name="presult_what_field_group" ng-model="presult_whatfield_Group" value="1vs1" ng-click="updatePlayerResultCanvas()"><label for="radio_presult_group2">1vs1</label></td>
+							<td width="50%" style="text-align:center"></td>
+							<td><input id="radio_presult_group3" type="radio" name="presult_what_field_group" ng-model="presult_whatfield_Group" value="shots" ng-click="updatePlayerResultCanvas()"><label for="radio_presult_group3">Shots</label></td>
+						</table>	
+					</td>
+				</tr>
+
+			</table>
+
+			<div>
+
+					<td><resultpahkura user="line1"></resultpahkura></td>
+			</div>			
+			<div>
+				<table>
+					<td><resultpahkura user="line2"></resultpahkura></td>
+				</table>
+			</div>			
+			<div>
+				<table>
+					<td><resultpahkura user="line3"></resultpahkura></td>
+				</table>
+			</div>
+			
+			<div>
+				<table>
+					<td><resultpahkura user="line4"></resultpahkura></td>
+				</table>
+			</div>
+		</div>
+
+		<div style="float: left;">
+			<canvas id="PlayerResultCanvas" width="542" height="482">Your browser does not support the HTML5 canvas tag.</canvas>
+		</div>
+			
+		
+	</div>
+	<div ng-show="isSet(4)">
+		<div ng-controller="lineResultCtrl" style="float: left;">
+			<table border="1">
+				<tr>
+					<td >
+						<table>
+							<td ng-repeat="period in periods"><input id="lresult+{{period.periodName}}" type="checkbox"  ng-model="period.isChecked" ng-change="updateLineResultCanvas()"><label for=lresult+{{period.periodName}}>{{period.periodName}}</label></td>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<table>
+							<td></td>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<td><input id="radio_lresult_group1" type="radio" name="lresult_what_field_group" ng-model="lresult_whatfield_Group" value="pass" ng-click="updateLineResultCanvas()"><label for="radio_lresult_group1">Pass</label></td>
+							<td><input id="radio_lresult_group2" type="radio" name="lresult_what_field_group" ng-model="lresult_whatfield_Group" value="1vs1" ng-click="updateLineResultCanvas()"><label for="radio_lresult_group2">1vs1</label></td>
+							<td><input id="radio_lresult_group3" type="radio" name="lresult_what_field_group" ng-model="lresult_whatfield_Group" value="shots" ng-click="updateLineResultCanvas()"><label for="radio_lresult_group3">Shots</label></td>
+							<td><input id="radio_lresult_group4" type="radio" name="lresult_what_field_group" ng-model="lresult_whatfield_Group" value="shifts" ng-click="updateLineResultCanvas()"><label for="radio_lresult_group4">Shifts</label></td>			
+						</table>	
+					</td>
+				</tr>
+
+			</table>
+			<div>
+				<table>
+					<td><input id="radio_viewSelect1" type="radio" name="viewSelect" ng-model="viewSelect" value="line" ng-click="updateLineResultCanvas()"><label for="radio_viewSelect1">Line</label></td>
+					<td><input id="radio_viewSelect2" type="radio" name="viewSelect" ng-model="viewSelect" value="selector" ng-click="updateLineResultCanvas()"><label for="radio_viewSelect2">Selector</label></td>
+					<td><input id="radio_viewSelect3" type="radio" name="viewSelect" ng-model="viewSelect" value="time" ng-click="updateLineResultCanvas()"><label for="radio_viewSelect3">Time</label></td>
+				</table>
+			</div>
+
+			<div>
+				<table>
+					<td><input id="result_line1" type="radio" name="result_line_group" ng-model="result_line_group" value="line1" ng-click="ChangeResultLine(result_line_group)"><label for="result_line1">Line 1</label></td>
+					<td><input id="result_line2" type="radio" name="result_line_group" ng-model="result_line_group" value="line2" ng-click="ChangeResultLine(result_line_group)"><label for="result_line2">Line 2</label></td>
+					<td><input id="result_line3" type="radio" name="result_line_group" ng-model="result_line_group" value="line3" ng-click="ChangeResultLine(result_line_group)"><label for="result_line3">Line 3</label></td>					
+					<td><input id="result_line4" type="radio" name="result_line_group" ng-model="result_line_group" value="line4" ng-click="ChangeResultLine(result_line_group)"><label for="result_line4">Line 4</label></td>
+
+				</table>
+			</div>			
+			<div>
+				<table>
+					<td><input id="result_pp1" type="radio" name="result_line_group" ng-model="result_line_group" value="pp1" ng-click="ChangeResultLine(result_line_group)"><label for="result_pp1">PP 1</label></td>
+					<td><input id="result_pp2" type="radio" name="result_line_group" ng-model="result_line_group" value="pp2" ng-click="ChangeResultLine(result_line_group)"><label for="result_pp2">PP 2</label></td>
+					<td><input id="result_sh1" type="radio" name="result_line_group" ng-model="result_line_group" value="sh1" ng-click="ChangeResultLine(result_line_group)"><label for="result_sh1">SH 1</label></td>
+					<td><input id="result_sh2" type="radio" name="result_line_group" ng-model="result_line_group" value="sh2" ng-click="ChangeResultLine(result_line_group)"><label for="result_sh2">SH 2</label></td>
+
+				</table>
+			</div>			
+
+			
+			<div>
+				<table>
+				</table>
+			</div>
+			<div>
+				<input type="button" value="Update shifts Selector" ng-click="updateShifts()" />
+			</div>
+			<div>
+				<select ng-model="shiftValue" ng-change="selectorChange()"><option value="" selected="selected"></option><option ng-repeat="shift in shifts.shiftTable" value={{$index}}>{{shift.line}}|{{shift.period}}|{{shift.startTime|formatTimer}}-{{shift.endTime|formatTimer}}</option></select></td>
+			</div>
+			<div>
+  				<form name="form.timerForm" ng-submit="submitForm()" novalidate>
+					<label>
+       						Start Time:
+       						<input type="text" name="timeStart" ng-model="time.start" ng-pattern="/^[0-8]?[0-9]:[0-5][0-9]$/" required>
+    					</label>
+					</br>
+    					<label>
+       						End Time:
+       					<input type="text" name="timeEnd" ng-model="time.end" ng-pattern="/^[0-8]?[0-9]:[0-5][0-9]$/" required>
+    					</label>
+					</br>
+        				<button type="submit" ng-disabled="form.timerForm.$invalid">Submit</button>
+  				</form>
+			</div>
+		</div>
+
+		<div style="float: left;">
+			<canvas id="LineResultCanvas" width="542" height="482">Your browser does not support the HTML5 canvas tag.</canvas>
+		</div>
+			
+		
+	</div>
+	<div ng-show="isSet(5)">
+		<div ng-controller="dumpCtrl" style="float: left;">
+
+			<label>{{possession}}</label></br>
+			<label>{{pass}}</label></br>
+			<label>{{events}}</label>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
